@@ -29,6 +29,19 @@ const Homeadmin = () => {
     },
   ];
 
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    const getData = async () => {
+        const response = await axios.get('https://jsd5-mock-backend.onrender.com/members');
+        setData([...mockEmployees, ...response.data]);
+    };
+
+    getData();
+
+}, []);
+
  
   return (
     <>
@@ -112,7 +125,7 @@ const Homeadmin = () => {
           </thead>
 
           <tbody>
-            {mockEmployees.map((item) => {
+            {data.map((item) => {
               return (
                 <tr key={item.key}>
                   <td>{item.name}</td>

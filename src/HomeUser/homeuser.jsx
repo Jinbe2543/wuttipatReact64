@@ -2,6 +2,8 @@ import React from "react";
 import Layout from "../Layout";
 import "../App.css";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { useState, useEffect } from "react";
 
 const Homeuser = () => {
   const mockEmployees = [
@@ -24,6 +26,19 @@ const Homeuser = () => {
       position: "Designer",
     },
   ];
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    const getData = async () => {
+        const response = await axios.get('https://jsd5-mock-backend.onrender.com/members');
+        setData([...mockEmployees, ...response.data]);
+    };
+
+    getData();
+
+}, []);
   return (
     <>
       <Layout />
@@ -66,7 +81,7 @@ const Homeuser = () => {
             </tr>
           </thead>
           <tbody>
-            {mockEmployees.map((item) => {
+            {data.map((item) => {
               return (
                 <tr key={item.key}>
                   <td>{item.name}</td>
